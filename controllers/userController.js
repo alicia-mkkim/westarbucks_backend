@@ -3,8 +3,6 @@ const userService = require("../services/userService");
 const signUp = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    console.log("req.body ", req.body);
     if (!email || !password) {
       const error = new Error("KEY ERROR");
       error.statusCode = 400;
@@ -12,10 +10,10 @@ const signUp = async (req, res) => {
     }
 
     const user = await userService.signUp(email, password);
-    console.log("user : ", user);
+
     return res.status(201).json({
       message: "SIGNUP_SUCCESS",
-      user_Id: user.id,
+      user_Id: user[0].id,
     });
   } catch (err) {
     console.log(err);

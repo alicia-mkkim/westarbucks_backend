@@ -3,25 +3,27 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const signUp = async (email, password) => {
-  if (password.length < 8) {
-    const error = new Error("PASSWORD_TOO_SHORT");
-    error.statusCode = 400;
-    throw error;
+  try {
+    console.log("userService");
+    if (password.length < 8) {
+      const error = new Error("PASSWORD_TOO_SHORT");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const user = await userDao.getUserByEmail(email);
+    if (user.length !== 0) {
+      const error = new Error("EXSITING_USER");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
+    const newUser = await userDao.createUser(email, encryptedPassword);
+    return newUser;
+  } catch (err) {
+    console.log(err);
   }
-
-  const user = await userDao.getUserByEmail(email);
-
-  if (user.length !== 0) {
-    const error = new Error("EXSITING_USER");
-    error.statusCode = 400;
-    throw error;
-  }
-
-  const salt = bcrypt.genSaltSync();
-  const encryptedPassword = bcrypt.hashSync(password, salt);
-
-  const newUser = await userDao.createUser(email, encryptedPassword);
-  return newUser;
 };
 
 const login = async (email, password) => {

@@ -8,9 +8,13 @@ const getUserByEmail = async (email) => {
 };
 
 const createUser = async (email, encryptedPassword) => {
-  return await prisma.$queryRaw`
+  const createUser = await prisma.$queryRaw`
     INSERT INTO users (email, password) VALUES (${email}, ${encryptedPassword})
     `;
+
+  return await prisma.$queryRaw`
+     SELECT id, password, email from users where email =${email}; 
+   `;
 };
 
 const checkUser = async (email, password) => {
