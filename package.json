@@ -18,6 +18,8 @@
   "devDependencies": {
     "@prisma/client": "^3.11.0",
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "error-generator": "^0.3.4",
     "jsonwebtoken": "^8.5.1",
     "prettier-plugin-prisma": "^3.10.0",
     "prisma": "^3.11.0"

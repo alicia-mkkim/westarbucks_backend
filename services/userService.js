@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const signUp = async (email, password) => {
   try {
-    console.log("userService");
     if (password.length < 8) {
       const error = new Error("PASSWORD_TOO_SHORT");
       error.statusCode = 400;
@@ -28,7 +27,6 @@ const signUp = async (email, password) => {
 
 const login = async (email, password) => {
   const user = await userDao.checkUser(email, password);
-
   if (user.length === 0) {
     const error = new Error("INVALID_USER");
     error.statusCode = 400;
@@ -50,4 +48,12 @@ const login = async (email, password) => {
   }
 };
 
-module.exports = { signUp, login };
+const foundUser = async (id) => {
+  try {
+    return await userDao.foundUser(id);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { signUp, login, foundUser };

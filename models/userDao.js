@@ -12,6 +12,7 @@ const createUser = async (email, encryptedPassword) => {
     INSERT INTO users (email, password) VALUES (${email}, ${encryptedPassword})
     `;
 
+  console.log("createUSer in DAO");
   return await prisma.$queryRaw`
      SELECT id, password, email from users where email =${email}; 
    `;
@@ -23,4 +24,10 @@ const checkUser = async (email, password) => {
  `;
 };
 
-module.exports = { getUserByEmail, createUser, checkUser };
+const foundUser = async (id) => {
+  return await prisma.$queryRaw`
+   Select id from users where id=${id};
+  `;
+};
+
+module.exports = { getUserByEmail, createUser, checkUser, foundUser };

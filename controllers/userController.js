@@ -40,4 +40,11 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signUp, login };
+const foundUser = async (id) => {
+  try {
+    const foundUser = await userService.foundUser(id);
+  } catch (err) {
+    console.log(err);
+  }
+};
+module.exports = { signUp, login, foundUser };

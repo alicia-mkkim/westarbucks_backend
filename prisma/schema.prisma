@@ -20,16 +20,17 @@ model Category {
 }
 
 model Product {
-  id           Int      @id @default(autoincrement())
-  korean_name  String
-  english_name String?
-  category_id  Int
-  created_at   DateTime @default(now())
-  categories   Category @relation(fields: [category_id], references: [id])
-
+  id             Int              @id @default(autoincrement())
+  korean_name    String
+  english_name   String?
+  category_id    Int
+  created_at     DateTime         @default(now())
+  categories     Category         @relation(fields: [category_id], references: [id])
+  like           Boolean          @default(false)
   ProductImage   ProductImage[]
   ProductAllergy ProductAllergy[]
   Nutrition      Nutrition[]
+
   @@map("products")
 }
 
